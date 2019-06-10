@@ -41,13 +41,14 @@ public class BeerController {
         this.beerService = beerService;
     }
 
-    @GetMapping(produces = { "application/json" })
+    @GetMapping(produces = {"application/json"})
+    @ResponseBody
     public ResponseEntity<BeerPagedList> listBeers(@RequestParam(value = "pageNumber", required = false) Integer pageNumber,
                                                    @RequestParam(value = "pageSize", required = false) Integer pageSize,
                                                    @RequestParam(value = "beerName", required = false) String beerName,
-                                                   @RequestParam(value = "beerStyle", required = false) BeerStyleEnum beerStyle){
+                                                   @RequestParam(value = "beerStyle", required = false) BeerStyleEnum beerStyle) {
 
-        if (pageNumber == null || pageNumber < 0){
+        if (pageNumber == null || pageNumber < 0) {
             pageNumber = DEFAULT_PAGE_NUMBER;
         }
 
@@ -60,8 +61,8 @@ public class BeerController {
         return new ResponseEntity<>(beerList, HttpStatus.OK);
     }
 
-    @GetMapping(path = {"/{beerId}"},produces = { "application/json" })
-    public ResponseEntity<BeerDto>  getBeerById(@PathVariable("beerId") UUID beerId){
+    @GetMapping(path = {"/{beerId}"}, produces = {"application/json"})
+    public ResponseEntity<BeerDto> getBeerById(@PathVariable("beerId") UUID beerId) {
 
         return new ResponseEntity<>(beerService.findBeerById(beerId), HttpStatus.OK);
     }
